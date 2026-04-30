@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" width="800" height="350">
+  <defs>
+    <linearGradient id="cyan5" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00D4FF"/>
+      <stop offset="100%" style="stop-color:#0088FF"/>
+    </linearGradient>
+    <linearGradient id="white5" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#D0D8E0"/>
+    </linearGradient>
+    <linearGradient id="fadeLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0"/>
+      <stop offset="20%" style="stop-color:#00D4FF;stop-opacity:0.8"/>
+      <stop offset="80%" style="stop-color:#0088FF;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#0088FF;stop-opacity:0"/>
+    </linearGradient>
+    <filter id="c5glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Dark gray background -->
+  <rect width="800" height="350" rx="12" fill="#1A1E26"/>
+
+  <!-- Main wordmark — ALWAZZAN -->
+  <text x="400" y="155" text-anchor="middle" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="110" font-weight="200" fill="url(#white5)" letter-spacing="18">
+    ALWAZZAN
+  </text>
+
+  <!-- Glowing underline -->
+  <rect x="80" y="178" width="640" height="2" rx="1" fill="url(#fadeLine)" filter="url(#c5glow)"/>
+
+  <!-- OS — bold accent -->
+  <g filter="url(#c5glow)">
+    <text x="400" y="240" text-anchor="middle" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="700" fill="url(#cyan5)" letter-spacing="28">
+      OS
+    </text>
+  </g>
+
+  <!-- Minimal tagline -->
+  <text x="400" y="290" text-anchor="middle" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="300" fill="#4A6070" letter-spacing="8">
+    OPERATING SYSTEMS
+  </text>
+</svg>

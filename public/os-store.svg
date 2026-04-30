@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="400" height="320">
+  <defs>
+    <linearGradient id="cyan_s" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00D4FF"/>
+      <stop offset="100%" style="stop-color:#0088FF"/>
+    </linearGradient>
+    <linearGradient id="white_s" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#D0D8E0"/>
+    </linearGradient>
+    <linearGradient id="fade_s" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0"/>
+      <stop offset="20%" style="stop-color:#00D4FF;stop-opacity:0.7"/>
+      <stop offset="80%" style="stop-color:#0088FF;stop-opacity:0.7"/>
+      <stop offset="100%" style="stop-color:#0088FF;stop-opacity:0"/>
+    </linearGradient>
+    <filter id="gl_s">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="320" rx="20" fill="#1A1E26"/>
+
+  <text x="200" y="110" text-anchor="middle" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="38" font-weight="200" fill="url(#white_s)" letter-spacing="5">ALWAZZAN</text>
+  <rect x="70" y="123" width="260" height="1.5" rx="0.8" fill="url(#fade_s)" filter="url(#gl_s)"/>
+
+  <g filter="url(#gl_s)">
+    <text x="200" y="163" text-anchor="middle" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="700" fill="url(#cyan_s)" letter-spacing="10">OS</text>
+  </g>
+
+  <rect x="115" y="190" width="170" height="36" rx="18" fill="none" stroke="url(#cyan_s)" stroke-width="1.5" opacity="0.6"/>
+  <text x="200" y="214" text-anchor="middle" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="600" fill="url(#cyan_s)" letter-spacing="6">STORE</text>
+</svg>
