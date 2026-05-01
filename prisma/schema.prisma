@@ -1,0 +1,326 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  SALES
+  ACCOUNTANT
+  VIEWER
+}
+
+enum OfferStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum InvoiceStatus {
+  UNPAID
+  PARTIALLY_PAID
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum InstallmentStatus {
+  PENDING
+  PAID
+  OVERDUE
+}
+
+enum PaymentMethod {
+  CASH
+  BANK_TRANSFER
+  CHECK
+  CARD
+  OTHER
+}
+
+enum ExpenseStatus {
+  PENDING
+  BILLED
+  REIMBURSED
+}
+
+enum ProjectStatus {
+  PLANNING
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(SALES)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  offersCreated   Offer[]   @relation("OfferCreatedBy")
+  invoicesCreated Invoice[] @relation("InvoiceCreatedBy")
+}
+
+model Client {
+  id            String   @id @default(cuid())
+  name          String
+  contactPerson String?
+  email         String?
+  phone         String?
+  address       String?
+  taxId         String?
+  currencyCode  String   @default("IQD")
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  offers   Offer[]
+  invoices Invoice[]
+  expenses Expense[]
+  projects Project[]
+}
+
+model Project {
+  id           String        @id @default(cuid())
+  name         String
+  code         String?       @unique // e.g. ALMAWADA-HIS
+  description  String?
+  status       ProjectStatus @default(ACTIVE)
+  clientId     String?
+  client       Client?       @relation(fields: [clientId], references: [id])
+  startDate    DateTime?
+  endDate      DateTime?
+  budget       Decimal?      @db.Decimal(18, 2)
+  currencyCode String        @default("IQD")
+  notes        String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  offers   Offer[]
+  invoices Invoice[]
+  expenses Expense[]
+}
+
+model Currency {
+  code         String   @id // e.g. "IQD", "USD"
+  symbol       String
+  name         String
+  exchangeRate Decimal  @default(1) @db.Decimal(18, 6) // against base IQD
+  isBase       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Module {
+  id             String   @id @default(cuid())
+  name           String
+  nameAr         String?
+  description    String?
+  descriptionAr  String?
+  category       String?
+  defaultPrice   Decimal  @default(0) @db.Decimal(18, 2)
+  currencyCode   String   @default("IQD")
+  features       String[] // bullet points
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  offerItems OfferItem[]
+}
+
+model Offer {
+  id          String      @id @default(cuid())
+  number      String      @unique // e.g. AWZ-OFF-2026-0001
+  title       String
+  clientId    String
+  client      Client      @relation(fields: [clientId], references: [id])
+  projectId   String?
+  project     Project?    @relation(fields: [projectId], references: [id])
+  status      OfferStatus @default(DRAFT)
+  currencyCode String     @default("IQD")
+  subtotal    Decimal     @default(0) @db.Decimal(18, 2)
+  discount    Decimal     @default(0) @db.Decimal(18, 2)
+  tax         Decimal     @default(0) @db.Decimal(18, 2)
+  total       Decimal     @default(0) @db.Decimal(18, 2)
+  validUntil  DateTime?
+  notes       String?
+  termsJson   Json?       // custom terms array
+  sentAt      DateTime?
+  acceptedAt  DateTime?
+  createdById String
+  createdBy   User        @relation("OfferCreatedBy", fields: [createdById], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  items    OfferItem[]
+  invoices Invoice[]
+  expenses Expense[]
+}
+
+model OfferItem {
+  id          String  @id @default(cuid())
+  offerId     String
+  offer       Offer   @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  moduleId    String?
+  module      Module? @relation(fields: [moduleId], references: [id])
+  name        String
+  description String?
+  quantity    Int     @default(1)
+  unitPrice   Decimal @db.Decimal(18, 2)
+  total       Decimal @db.Decimal(18, 2)
+  order       Int     @default(0)
+}
+
+model Invoice {
+  id           String        @id @default(cuid())
+  number       String        @unique // e.g. AWZ-INV-2026-0001
+  clientId     String
+  client       Client        @relation(fields: [clientId], references: [id])
+  offerId      String?
+  offer        Offer?        @relation(fields: [offerId], references: [id])
+  projectId    String?
+  project      Project?      @relation(fields: [projectId], references: [id])
+  status       InvoiceStatus @default(UNPAID)
+  currencyCode String        @default("IQD")
+  subtotal     Decimal       @default(0) @db.Decimal(18, 2)
+  discount     Decimal       @default(0) @db.Decimal(18, 2)
+  tax          Decimal       @default(0) @db.Decimal(18, 2)
+  total        Decimal       @default(0) @db.Decimal(18, 2)
+  paidAmount   Decimal       @default(0) @db.Decimal(18, 2)
+  issueDate    DateTime      @default(now())
+  dueDate      DateTime?
+  notes        String?
+  createdById  String
+  createdBy    User          @relation("InvoiceCreatedBy", fields: [createdById], references: [id])
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  items        InvoiceItem[]
+  installments Installment[]
+  payments     Payment[]
+  expenses     Expense[]
+  attachments  InvoiceAttachment[]
+}
+
+model InvoiceAttachment {
+  id         String   @id @default(cuid())
+  invoiceId  String
+  invoice    Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  name       String
+  url        String
+  mimeType   String?
+  size       Int?
+  notes      String?
+  uploadedAt DateTime @default(now())
+}
+
+model InvoiceItem {
+  id          String   @id @default(cuid())
+  invoiceId   String
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  quantity    Int      @default(1)
+  unitPrice   Decimal  @db.Decimal(18, 2)
+  total       Decimal  @db.Decimal(18, 2)
+  order       Int      @default(0)
+  expense     Expense?
+}
+
+model Installment {
+  id        String            @id @default(cuid())
+  invoiceId String
+  invoice   Invoice           @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  number    Int               // 1, 2, 3 ...
+  dueDate   DateTime
+  amount    Decimal           @db.Decimal(18, 2)
+  status    InstallmentStatus @default(PENDING)
+  paidAt    DateTime?
+  notes     String?
+
+  payments Payment[]
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  invoiceId     String
+  invoice       Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  installmentId String?
+  installment   Installment?  @relation(fields: [installmentId], references: [id])
+  amount        Decimal       @db.Decimal(18, 2)
+  method        PaymentMethod @default(CASH)
+  reference     String?
+  notes         String?
+  paidAt        DateTime      @default(now())
+  createdAt     DateTime      @default(now())
+}
+
+model Setting {
+  key   String @id
+  value String
+}
+
+model Partner {
+  id           String   @id @default(cuid())
+  name         String
+  email        String?
+  phone        String?
+  profitShare  Decimal  @default(50) @db.Decimal(5, 2) // percentage (0-100)
+  active       Boolean  @default(true)
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  expenses     Expense[]
+  withdrawals  Withdrawal[]
+}
+
+model Expense {
+  id            String        @id @default(cuid())
+  date          DateTime      @default(now())
+  vendor        String
+  description   String?
+  cost          Decimal       @db.Decimal(18, 2)
+  currencyCode  String        @default("IQD")
+  markupPct     Decimal       @default(20) @db.Decimal(5, 2)
+  billable      Decimal       @db.Decimal(18, 2) // computed = cost * (1 + markupPct/100)
+  status        ExpenseStatus @default(PENDING)
+  paidByPartnerId String
+  paidByPartner Partner       @relation(fields: [paidByPartnerId], references: [id])
+  clientId      String?
+  client        Client?       @relation(fields: [clientId], references: [id])
+  projectId     String?
+  project       Project?      @relation(fields: [projectId], references: [id])
+  offerId       String?
+  offer         Offer?        @relation(fields: [offerId], references: [id])
+  invoiceId     String?
+  invoice       Invoice?      @relation(fields: [invoiceId], references: [id])
+  invoiceItemId String?       @unique
+  invoiceItem   InvoiceItem?  @relation(fields: [invoiceItemId], references: [id])
+  receiptUrl    String?
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Withdrawal {
+  id           String   @id @default(cuid())
+  partnerId    String
+  partner      Partner  @relation(fields: [partnerId], references: [id])
+  amount       Decimal  @db.Decimal(18, 2)
+  currencyCode String   @default("IQD")
+  date         DateTime @default(now())
+  notes        String?
+  createdAt    DateTime @default(now())
+}
