@@ -3,6 +3,7 @@ import './globals.css';
 import { LangProvider } from '@/lib/lang-context';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
 export const metadata: Metadata = {
   title: 'AlwazzanOS — Operating Systems for the Future',
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
           <main className="pt-16">{children}</main>
           <Footer />
+          <WhatsAppButton />
         </LangProvider>
       </body>
     </html>
