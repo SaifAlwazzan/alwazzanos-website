@@ -4,32 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 8787",
-    "build": "prisma generate && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
-    "@prisma/client": "^5.22.0",
-    "@types/bcryptjs": "^2.4.6",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/multer": "^2.1.0",
-    "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
-    "cors": "^2.8.6",
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.14.0",
-    "multer": "^2.1.1",
     "next": "16.2.4",
-    "prisma": "^5.22.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "tailwind-merge": "^3.5.0",
-    "tsx": "^4.21.0",
-    "zod": "^4.4.1"
+    "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
