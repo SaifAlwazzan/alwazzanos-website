@@ -31,7 +31,7 @@ export default function ContactPage() {
         <div className="space-y-5">
           {[
             { icon: <Phone size={20} className="text-cyan-400" />,  label: lang === 'ar' ? 'الهاتف' : 'Phone',            value: '07777900495' },
-            { icon: <Mail size={20} className="text-cyan-400" />,  label: lang === 'ar' ? 'البريد الإلكتروني' : 'Email',   value: 'swordbarsh@gmail.com' },
+            { icon: <Mail size={20} className="text-cyan-400" />,  label: lang === 'ar' ? 'البريد الإلكتروني' : 'Email',   value: 'info@alwazzanos.com' },
             { icon: <Globe size={20} className="text-cyan-400" />, label: lang === 'ar' ? 'الموقع الإلكتروني' : 'Website', value: 'alwazzanos.com' },
             { icon: <MapPin size={20} className="text-cyan-400" />, label: lang === 'ar' ? 'الموقع' : 'Location',         value: lang === 'ar' ? 'العراق — البصرة' : 'Iraq — Basra' },
           ].map(item => (

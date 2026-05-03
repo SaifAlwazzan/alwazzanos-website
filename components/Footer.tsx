@@ -26,7 +26,7 @@ export default function Footer() {
         <div>
           <h4 className="text-sm font-semibold text-[var(--text)] mb-3">{tr(t.nav.contact, lang)}</h4>
           <ul className="space-y-2 text-sm text-[var(--muted)]">
-            <li>swordbarsh@gmail.com</li>
+            <li>info@alwazzanos.com</li>
             <li>alwazzanos.com</li>
             <li>07777900495</li>
             <li>Iraq — Basra</li>
