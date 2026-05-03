@@ -28,7 +28,8 @@ export default function Footer() {
           <ul className="space-y-2 text-sm text-[var(--muted)]">
             <li>swordbarsh@gmail.com</li>
             <li>alwazzanos.com</li>
-            <li>Iraq — Baghdad</li>
+            <li>07777900495</li>
+            <li>Iraq — Basra</li>
           </ul>
         </div>
       </div>

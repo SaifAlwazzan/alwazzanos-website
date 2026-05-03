@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useLang } from '@/lib/lang-context';
 import { t, tr } from '@/lib/i18n';
-import { Send, Mail, Globe, MapPin, CheckCircle } from 'lucide-react';
+import { Send, Mail, Globe, MapPin, Phone, CheckCircle } from 'lucide-react';
 
 export default function ContactPage() {
   const { lang } = useLang();
@@ -30,9 +30,10 @@ export default function ContactPage() {
         {/* Info */}
         <div className="space-y-5">
           {[
+            { icon: <Phone size={20} className="text-cyan-400" />,  label: lang === 'ar' ? 'الهاتف' : 'Phone',            value: '07777900495' },
             { icon: <Mail size={20} className="text-cyan-400" />,  label: lang === 'ar' ? 'البريد الإلكتروني' : 'Email',   value: 'swordbarsh@gmail.com' },
             { icon: <Globe size={20} className="text-cyan-400" />, label: lang === 'ar' ? 'الموقع الإلكتروني' : 'Website', value: 'alwazzanos.com' },
-            { icon: <MapPin size={20} className="text-cyan-400" />, label: lang === 'ar' ? 'الموقع' : 'Location',         value: lang === 'ar' ? 'العراق — بغداد' : 'Iraq — Baghdad' },
+            { icon: <MapPin size={20} className="text-cyan-400" />, label: lang === 'ar' ? 'الموقع' : 'Location',         value: lang === 'ar' ? 'العراق — البصرة' : 'Iraq — Basra' },
           ].map(item => (
             <div key={item.label} className="glow-border rounded-2xl bg-[var(--surface)] p-5 flex items-start gap-4">
               <div className="mt-0.5">{item.icon}</div>
