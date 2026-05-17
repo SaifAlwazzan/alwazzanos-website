@@ -58,6 +58,16 @@ enum ProjectStatus {
   CANCELLED
 }
 
+enum TenderStatus {
+  WATCHING
+  PREPARING
+  SUBMITTED
+  SHORTLISTED
+  WON
+  LOST
+  CANCELLED
+}
+
 model User {
   id        String   @id @default(cuid())
   name      String
@@ -312,6 +322,46 @@ model Expense {
   notes         String?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
+}
+
+model Tender {
+  id                 String       @id @default(cuid())
+  number             String       @unique // e.g. AWZ-TND-2026-0001
+  title              String
+  issuingEntity      String       // org issuing the tender (govt, hospital, etc.)
+  referenceNumber    String?      // the tender's own ID from the issuing entity
+  description        String?
+  status             TenderStatus @default(WATCHING)
+  currencyCode       String       @default("IQD")
+  estimatedValue     Decimal?     @db.Decimal(18, 2)
+  bidBondAmount      Decimal?     @db.Decimal(18, 2)
+  performanceBondPct Decimal?     @db.Decimal(5, 2)
+  submissionMethod   String?      // e.g. "Sealed envelope", "Online portal"
+  publishedDate      DateTime?
+  deadline           DateTime?    // submission deadline
+  openingDate        DateTime?    // when bids are opened
+  submittedAt        DateTime?
+  resultAt           DateTime?
+  resultNotes        String?
+  requirements       String[]     // checklist of required materials
+  notes              String?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  documents TenderDocument[]
+}
+
+model TenderDocument {
+  id         String   @id @default(cuid())
+  tenderId   String
+  tender     Tender   @relation(fields: [tenderId], references: [id], onDelete: Cascade)
+  name       String
+  url        String
+  category   String?  // e.g. "Tender notice", "Technical spec", "Submission"
+  mimeType   String?
+  size       Int?
+  notes      String?
+  uploadedAt DateTime @default(now())
 }
 
 model Withdrawal {

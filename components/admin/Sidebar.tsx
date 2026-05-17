@@ -15,6 +15,7 @@ import {
   HandCoins,
   UserSquare2,
   FolderKanban,
+  ClipboardList,
 } from 'lucide-react';
 import { clearToken } from '@/lib/oim-api';
 import { cn } from '@/lib/oim-utils';
@@ -25,6 +26,7 @@ const nav = [
   { href: '/projects', label: 'Projects', icon: FolderKanban },
   { href: '/modules', label: 'Modules', icon: Package },
   { href: '/offers', label: 'Offers', icon: FileText },
+  { href: '/tenders', label: 'Tenders', icon: ClipboardList },
   { href: '/invoices', label: 'Invoices', icon: Receipt },
   { href: '/expenses', label: 'Expenses', icon: Wallet },
   { href: '/partners', label: 'Partners', icon: UserSquare2 },
