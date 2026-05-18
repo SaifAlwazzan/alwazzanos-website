@@ -21,18 +21,18 @@ import { clearToken } from '@/lib/oim-api';
 import { cn } from '@/lib/oim-utils';
 
 const nav = [
-  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/clients', label: 'Clients', icon: Building2 },
-  { href: '/projects', label: 'Projects', icon: FolderKanban },
-  { href: '/modules', label: 'Modules', icon: Package },
-  { href: '/offers', label: 'Offers', icon: FileText },
-  { href: '/tenders', label: 'Tenders', icon: ClipboardList },
-  { href: '/invoices', label: 'Invoices', icon: Receipt },
-  { href: '/expenses', label: 'Expenses', icon: Wallet },
-  { href: '/partners', label: 'Partners', icon: UserSquare2 },
-  { href: '/ledger', label: 'Partner Ledger', icon: HandCoins },
-  { href: '/users', label: 'Users', icon: Users },
-  { href: '/settings', label: 'Settings', icon: Settings },
+  { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/admin/clients', label: 'Clients', icon: Building2 },
+  { href: '/admin/projects', label: 'Projects', icon: FolderKanban },
+  { href: '/admin/modules', label: 'Modules', icon: Package },
+  { href: '/admin/offers', label: 'Offers', icon: FileText },
+  { href: '/admin/tenders', label: 'Tenders', icon: ClipboardList },
+  { href: '/admin/invoices', label: 'Invoices', icon: Receipt },
+  { href: '/admin/expenses', label: 'Expenses', icon: Wallet },
+  { href: '/admin/partners', label: 'Partners', icon: UserSquare2 },
+  { href: '/admin/ledger', label: 'Partner Ledger', icon: HandCoins },
+  { href: '/admin/users', label: 'Users', icon: Users },
+  { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 
 export default function Sidebar() {

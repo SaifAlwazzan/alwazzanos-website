@@ -66,7 +66,7 @@ export default function OffersPage() {
           <h1 className="text-3xl font-bold text-slate-900">Offers</h1>
           <p className="text-slate-500 mt-1">Create and manage client proposals</p>
         </div>
-        <Link href="/offers/new" className="btn-primary">
+        <Link href="/admin/offers/new" className="btn-primary">
           <Plus size={18} />
           New Offer
         </Link>
@@ -123,7 +123,7 @@ export default function OffersPage() {
                   </td>
                   <td className="px-6 py-4 text-slate-600 text-sm">{formatDate(o.createdAt)}</td>
                   <td className="px-6 py-4 text-right space-x-1">
-                    <Link href={`/offers/${o.id}`} className="inline-flex p-2 rounded hover:bg-slate-100 text-slate-600">
+                    <Link href={`/admin/offers/${o.id}`} className="inline-flex p-2 rounded hover:bg-slate-100 text-slate-600">
                       <Eye size={16} />
                     </Link>
                     <button onClick={() => handleDelete(o.id)} className="p-2 rounded hover:bg-red-50 text-red-600">

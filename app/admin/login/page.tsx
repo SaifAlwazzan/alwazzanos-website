@@ -6,8 +6,8 @@ import { api, setToken, setUser } from '@/lib/oim-api';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin');
-  const [password, setPassword] = useState('admin');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -19,7 +19,7 @@ export default function LoginPage() {
       const res = await api.post<{ token: string; user: unknown }>('/auth/login', { email, password });
       setToken(res.token);
       setUser(res.user);
-      router.replace('/dashboard');
+      router.replace('/admin/dashboard');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
@@ -72,9 +72,6 @@ export default function LoginPage() {
           <button type="submit" className="btn-primary w-full" disabled={loading}>
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
-          <p className="text-xs text-slate-500 text-center pt-2">
-            Default: admin / admin
-          </p>
         </form>
       </div>
     </div>

@@ -72,7 +72,7 @@ export default function ProjectDetailPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push('/projects')} className="p-2 rounded hover:bg-slate-100">
+          <button onClick={() => router.push('/admin/projects')} className="p-2 rounded hover:bg-slate-100">
             <ArrowLeft size={18} />
           </button>
           <div>
@@ -180,7 +180,7 @@ export default function ProjectDetailPage() {
             <tbody className="divide-y divide-slate-200">
               {project.offers.map((o) => (
                 <tr key={o.id} className="hover:bg-slate-50">
-                  <td className="px-6 py-3"><Link href={`/offers/${o.id}`} className="font-mono text-sm text-brand hover:underline">{o.number}</Link></td>
+                  <td className="px-6 py-3"><Link href={`/admin/offers/${o.id}`} className="font-mono text-sm text-brand hover:underline">{o.number}</Link></td>
                   <td className="px-6 py-3 text-sm">{o.title}</td>
                   <td className="px-6 py-3"><span className="text-xs px-2 py-1 rounded bg-slate-100">{o.status}</span></td>
                   <td className="px-6 py-3 text-right font-semibold">{formatCurrency(o.total, o.currencyCode)}</td>
@@ -211,7 +211,7 @@ export default function ProjectDetailPage() {
             <tbody className="divide-y divide-slate-200">
               {project.invoices.map((inv) => (
                 <tr key={inv.id} className="hover:bg-slate-50">
-                  <td className="px-6 py-3"><Link href={`/invoices/${inv.id}`} className="font-mono text-sm text-brand hover:underline">{inv.number}</Link></td>
+                  <td className="px-6 py-3"><Link href={`/admin/invoices/${inv.id}`} className="font-mono text-sm text-brand hover:underline">{inv.number}</Link></td>
                   <td className="px-6 py-3"><span className="text-xs px-2 py-1 rounded bg-slate-100">{inv.status.replace('_', ' ')}</span></td>
                   <td className="px-6 py-3 text-right font-semibold">{formatCurrency(inv.total, inv.currencyCode)}</td>
                   <td className="px-6 py-3 text-right text-emerald-600">{formatCurrency(inv.paidAmount, inv.currencyCode)}</td>

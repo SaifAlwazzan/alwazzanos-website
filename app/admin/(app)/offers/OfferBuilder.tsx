@@ -149,7 +149,7 @@ export default function OfferBuilder({ initial }: { initial?: OfferData }) {
       const res = initial?.id
         ? await api.patch<{ offer: { id: string } }>(`/offers/${initial.id}`, payload)
         : await api.post<{ offer: { id: string } }>('/offers', payload);
-      router.push(`/offers/${res.offer.id}`);
+      router.push(`/admin/offers/${res.offer.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Save failed');
       setSaving(false);

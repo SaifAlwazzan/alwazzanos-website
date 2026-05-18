@@ -150,7 +150,7 @@ export default function InvoiceDetailPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push('/invoices')} className="p-2 rounded hover:bg-slate-100">
+          <button onClick={() => router.push('/admin/invoices')} className="p-2 rounded hover:bg-slate-100">
             <ArrowLeft size={18} />
           </button>
           <div>
@@ -164,7 +164,7 @@ export default function InvoiceDetailPage() {
           </div>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => window.open(`/invoices/${invoice.id}/print`, '_blank')} className="btn-secondary">
+          <button onClick={() => window.open(`/admin/invoices/${invoice.id}/print`, '_blank')} className="btn-secondary">
             <Printer size={16} /> Print / PDF
           </button>
           <button onClick={() => { setSendResult(null); setShowSend(true); }} className="btn-secondary">

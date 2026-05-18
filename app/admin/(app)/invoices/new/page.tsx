@@ -138,7 +138,7 @@ export default function NewInvoicePage() {
         dueDate: form.dueDate || null,
         installments,
       });
-      router.push(`/invoices/${res.invoice.id}`);
+      router.push(`/admin/invoices/${res.invoice.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Save failed');
       setSaving(false);

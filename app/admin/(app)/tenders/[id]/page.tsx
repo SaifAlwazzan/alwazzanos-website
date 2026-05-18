@@ -128,7 +128,7 @@ export default function TenderDetailPage({ params }: { params: Promise<{ id: str
   return (
     <div className="space-y-6 max-w-4xl">
       <div className="flex items-center justify-between">
-        <Link href="/tenders" className="text-slate-600 hover:text-slate-900 inline-flex items-center gap-2 text-sm">
+        <Link href="/admin/tenders" className="text-slate-600 hover:text-slate-900 inline-flex items-center gap-2 text-sm">
           <ArrowLeft size={16} /> Back to Tenders
         </Link>
         <div className="flex gap-2">
@@ -141,7 +141,7 @@ export default function TenderDetailPage({ params }: { params: Promise<{ id: str
             </>
           ) : (
             <>
-              <button onClick={() => window.open(`/tenders/${id}/print`, '_blank')} className="btn-secondary">
+              <button onClick={() => window.open(`/admin/tenders/${id}/print`, '_blank')} className="btn-secondary">
                 <Printer size={16} /> Print / PDF
               </button>
               <button onClick={() => setEditing(true)} className="btn-primary">Edit</button>

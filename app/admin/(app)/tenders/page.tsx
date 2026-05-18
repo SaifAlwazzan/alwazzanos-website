@@ -78,7 +78,7 @@ export default function TendersPage() {
           <h1 className="text-3xl font-bold text-slate-900">Tenders</h1>
           <p className="text-slate-500 mt-1">Track tender opportunities, submissions, and outcomes</p>
         </div>
-        <Link href="/tenders/new" className="btn-primary">
+        <Link href="/admin/tenders/new" className="btn-primary">
           <Plus size={18} />
           New Tender
         </Link>
@@ -149,7 +149,7 @@ export default function TendersPage() {
                       ) : '—'}
                     </td>
                     <td className="px-6 py-4 text-right space-x-1">
-                      <Link href={`/tenders/${t.id}`} className="inline-flex p-2 rounded hover:bg-slate-100 text-slate-600">
+                      <Link href={`/admin/tenders/${t.id}`} className="inline-flex p-2 rounded hover:bg-slate-100 text-slate-600">
                         <Eye size={16} />
                       </Link>
                       <button onClick={() => handleDelete(t.id)} className="p-2 rounded hover:bg-red-50 text-red-600">

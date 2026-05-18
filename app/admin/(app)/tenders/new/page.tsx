@@ -57,7 +57,7 @@ export default function NewTenderPage() {
         openingDate: form.openingDate || null,
       };
       const res = await api.post<{ tender: { id: string } }>('/tenders', payload);
-      router.push(`/tenders/${res.tender.id}`);
+      router.push(`/admin/tenders/${res.tender.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Save failed');
       setSaving(false);

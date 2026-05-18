@@ -70,7 +70,7 @@ export default function InvoicesPage() {
           <button onClick={() => setShowFromOffer(true)} className="btn-secondary">
             <FileDown size={18} /> From Offer
           </button>
-          <Link href="/invoices/new" className="btn-primary">
+          <Link href="/admin/invoices/new" className="btn-primary">
             <Plus size={18} /> New Invoice
           </Link>
         </div>
@@ -127,7 +127,7 @@ export default function InvoicesPage() {
                   </td>
                   <td className="px-6 py-4 text-sm text-slate-600">{formatDate(inv.issueDate)}</td>
                   <td className="px-6 py-4 text-right space-x-1">
-                    <Link href={`/invoices/${inv.id}`} className="inline-flex p-2 rounded hover:bg-slate-100 text-slate-600">
+                    <Link href={`/admin/invoices/${inv.id}`} className="inline-flex p-2 rounded hover:bg-slate-100 text-slate-600">
                       <Eye size={16} />
                     </Link>
                     <button onClick={() => handleDelete(inv.id)} className="p-2 rounded hover:bg-red-50 text-red-600">

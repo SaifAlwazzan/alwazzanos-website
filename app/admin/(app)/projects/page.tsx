@@ -97,7 +97,7 @@ export default function ProjectsPage() {
             <div key={p.id} className="card p-5 hover:shadow-md transition-shadow">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1">
-                  <Link href={`/projects/${p.id}`} className="font-semibold text-slate-900 hover:text-brand">
+                  <Link href={`/admin/projects/${p.id}`} className="font-semibold text-slate-900 hover:text-brand">
                     {p.name}
                   </Link>
                   {p.code && <div className="text-xs text-slate-500 font-mono mt-0.5">{p.code}</div>}
@@ -120,7 +120,7 @@ export default function ProjectsPage() {
                 <span>{p._count.expenses} expenses</span>
               </div>
               <div className="flex justify-end gap-1 mt-3">
-                <Link href={`/projects/${p.id}`} className="p-2 rounded hover:bg-slate-100 text-slate-600" title="View">
+                <Link href={`/admin/projects/${p.id}`} className="p-2 rounded hover:bg-slate-100 text-slate-600" title="View">
                   <Eye size={16} />
                 </Link>
                 <button onClick={() => { setEditing(p); setShowForm(true); }} className="p-2 rounded hover:bg-slate-100 text-slate-600" title="Edit">

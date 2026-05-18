@@ -83,7 +83,7 @@ export default function OfferDetailPage() {
   }
 
   function openPrintView() {
-    window.open(`/offers/${params.id}/print`, '_blank');
+    window.open(`/admin/offers/${params.id}/print`, '_blank');
   }
 
   if (loading) return <div className="text-center text-slate-500">Loading...</div>;
@@ -116,7 +116,7 @@ export default function OfferDetailPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push('/offers')} className="p-2 rounded hover:bg-slate-100">
+          <button onClick={() => router.push('/admin/offers')} className="p-2 rounded hover:bg-slate-100">
             <ArrowLeft size={18} />
           </button>
           <div>
