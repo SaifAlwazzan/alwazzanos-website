@@ -3,7 +3,7 @@
 import { useEffect, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Save, Plus, Trash2 } from 'lucide-react';
+import { ArrowLeft, Save, Plus, Trash2, Printer } from 'lucide-react';
 import { api } from '@/lib/oim-api';
 import { formatCurrency, formatDate } from '@/lib/oim-utils';
 
@@ -140,7 +140,12 @@ export default function TenderDetailPage({ params }: { params: Promise<{ id: str
               </button>
             </>
           ) : (
-            <button onClick={() => setEditing(true)} className="btn-primary">Edit</button>
+            <>
+              <button onClick={() => window.open(`/tenders/${id}/print`, '_blank')} className="btn-secondary">
+                <Printer size={16} /> Print / PDF
+              </button>
+              <button onClick={() => setEditing(true)} className="btn-primary">Edit</button>
+            </>
           )}
         </div>
       </div>

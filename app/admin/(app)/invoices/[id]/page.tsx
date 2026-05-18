@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Printer, Plus, Trash2, CheckCircle, Clock, Calendar, Paperclip, Upload, FileText } from 'lucide-react';
+import { ArrowLeft, Printer, Plus, Trash2, CheckCircle, Clock, Calendar, Paperclip, Upload, FileText, Send, MessageCircle, Mail } from 'lucide-react';
 import { api } from '@/lib/oim-api';
 import { formatCurrency, formatDate } from '@/lib/oim-utils';
 
@@ -50,6 +50,9 @@ export default function InvoiceDetailPage() {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [paymentInstallmentId, setPaymentInstallmentId] = useState<string | null>(null);
   const [showPlanForm, setShowPlanForm] = useState(false);
+  const [showSend, setShowSend] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendResult, setSendResult] = useState<Record<string, { ok: boolean; error?: string }> | null>(null);
   const [loading, setLoading] = useState(true);
 
   async function load() {
@@ -118,6 +121,19 @@ export default function InvoiceDetailPage() {
     }
   }
 
+  async function sendInvoice(channels: ('whatsapp' | 'email')[]) {
+    setSending(true);
+    setSendResult(null);
+    try {
+      const res = await api.post<{ results: Record<string, { ok: boolean; error?: string }> }>(`/invoices/${params.id}/send`, { channels });
+      setSendResult(res.results);
+    } catch (err) {
+      setSendResult({ error: { ok: false, error: err instanceof Error ? err.message : 'Failed' } });
+    } finally {
+      setSending(false);
+    }
+  }
+
   function formatBytes(bytes: number | null) {
     if (!bytes) return '';
     if (bytes < 1024) return `${bytes} B`;
@@ -150,6 +166,9 @@ export default function InvoiceDetailPage() {
         <div className="flex gap-2">
           <button onClick={() => window.open(`/invoices/${invoice.id}/print`, '_blank')} className="btn-secondary">
             <Printer size={16} /> Print / PDF
+          </button>
+          <button onClick={() => { setSendResult(null); setShowSend(true); }} className="btn-secondary">
+            <Send size={16} /> Send to Client
           </button>
           {invoice.payments.length === 0 && (
             <button onClick={() => setShowPlanForm(true)} className="btn-secondary">
@@ -375,6 +394,45 @@ export default function InvoiceDetailPage() {
           existing={invoice.installments.length}
           onClose={(refresh) => { setShowPlanForm(false); if (refresh) load(); }}
         />
+      )}
+
+      {showSend && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => !sending && setShowSend(false)}>
+          <div className="bg-white rounded-xl max-w-md w-full p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <h3 className="font-bold text-lg mb-3">Send Invoice {invoice.number}</h3>
+            <div className="text-sm text-slate-600 mb-4">
+              Pick a channel. Message includes total, due date, and payment plan.
+              <ul className="mt-2 space-y-0.5 text-xs">
+                <li>WhatsApp → {invoice.client.phone || <span className="text-red-600">no phone on file</span>}</li>
+                <li>Email → {invoice.client.email || <span className="text-red-600">no email on file</span>}</li>
+              </ul>
+            </div>
+            <div className="flex gap-2 mb-4">
+              <button onClick={() => sendInvoice(['whatsapp'])} disabled={sending || !invoice.client.phone} className="btn-secondary flex-1 disabled:opacity-50">
+                <MessageCircle size={16} /> WhatsApp
+              </button>
+              <button onClick={() => sendInvoice(['email'])} disabled={sending || !invoice.client.email} className="btn-secondary flex-1 disabled:opacity-50">
+                <Mail size={16} /> Email
+              </button>
+              <button onClick={() => sendInvoice(['whatsapp', 'email'])} disabled={sending || (!invoice.client.phone && !invoice.client.email)} className="btn-primary flex-1 disabled:opacity-50">
+                <Send size={16} /> Both
+              </button>
+            </div>
+            {sending && <div className="text-sm text-slate-500">Sending...</div>}
+            {sendResult && (
+              <div className="space-y-2 text-sm">
+                {Object.entries(sendResult).map(([channel, result]) => (
+                  <div key={channel} className={`p-3 rounded ${result.ok ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'}`}>
+                    <strong className="capitalize">{channel}:</strong> {result.ok ? 'Sent ✓' : result.error}
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="flex justify-end mt-4">
+              <button onClick={() => setShowSend(false)} disabled={sending} className="btn-secondary">Close</button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
